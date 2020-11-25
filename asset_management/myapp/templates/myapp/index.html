@@ -1,0 +1,378 @@
+{% load static %}
+
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title> Admin  Dashboard</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="{%static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+  <!-- Custom styles for this template-->
+  <link href="{%static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+
+<!--Links for showcasing map -->
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+
+
+    <style>
+      #mapid {
+        height: 500px;
+        width: 800px;
+        margin-left:auto;
+        margin-right:auto;
+      }
+
+      .container {
+  position: relative;
+  width: 50%;
+}
+
+/* Make the image responsive */
+.container img {
+  width: 100%;
+  height: auto;
+}
+
+/* Style the button and place it in the middle of the container/image */
+.container .btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #555;
+  color: white;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.container .btn:hover {
+  background-color: black;
+}
+
+
+    </style>
+
+</head>
+
+
+<body id="page-top">
+        {% include './dashboard.html' %}
+   <CENTER> <h1>Motor Location</h1></CENTER>
+   <center><p>
+      latitude: <span id="latitude"></span>&deg;<br />
+      longitude: <span id="longitude"></span>&deg;
+    </p></center>
+
+<script language="JavaScript" type="text/javascript">
+var Path='https://thingspeak.com/';
+var ImgAry=new Array('','apps/matlab_visualizations/330157','Two.gif','Three.gif','Four.gif','Five.gif');
+
+function Swap(obj,id){
+ var i=obj.selectedIndex;
+ if (i<1){ return; }
+ document.getElementById(id).src=Path+ImgAry[i];
+}
+
+var Path1='https://thingspeak.com/';
+var ImgAry1=new Array('','apps/matlab_visualizations/330126','Two.gif','Three.gif','Four.gif','Five.gif');
+
+function Swapv(obj,id){
+ var i=obj.selectedIndex;
+ if (i<1){ return; }
+ document.getElementById(id).src=Path+ImgAry1[i];
+}
+
+var Path2='https://thingspeak.com/';
+var ImgAry2=new Array('','apps/matlab_visualizations/328857','Two.gif','Three.gif','Four.gif','Five.gif');
+
+function Swapc(obj,id){
+ var i=obj.selectedIndex;
+ if (i<1){ return; }
+ document.getElementById(id).src=Path2+ImgAry2[i];
+}
+
+var Path3='https://thingspeak.com/';
+var ImgAry3=new Array('','apps/plugins/330129','Two.gif','Three.gif','Four.gif','Five.gif');
+
+function Swapa(obj,id){
+ var i=obj.selectedIndex;
+ if (i<1){ return; }
+ document.getElementById(id).src=Path3+ImgAry3[i];
+}
+
+</script>
+
+    <div id="mapid" ></div>
+
+    <script>
+     if ('geolocation' in navigator) {
+
+        console.log('geolocation available');
+        navigator.geolocation.getCurrentPosition(position => {
+          lat = {{lat}};
+          lon = {{lon}};
+<!--                lat=12.973253;-->
+<!--                lon=77.702913;-->
+          document.getElementById('latitude').textContent = lat;
+          document.getElementById('longitude').textContent = lon;
+
+          var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'pk.eyJ1Ijoic3J1dGhpLXBhcnZhdGhhIiwiYSI6ImNraHZ4Mzl4NDB5cmgycnA1N2R4a3p2ejYifQ.tRiRFMruVsFu1Jh90fx5Jg'
+}).addTo(mymap);
+
+
+         const marker = L.marker([lat, lon]).addTo(mymap);
+         marker.bindPopup("<B>Motor iFxM1.</B>").openPopup();
+         var circ1=L.circle([lat, lon], {radius: 300,color: 'red',fillColor:'red',opacity:.75}).addTo(mymap);
+         var marker1=L.marker([12.957555,77.5526088]).addTo(myapp);
+         var circ1=L.circle([12.957555,77.5526088], {radius: 300,color: 'red',fillColor:'red',opacity:.75}).addTo(mymap);
+         var marker2=L.marker([13.005071,77.569441]).addTo(myapp);
+         const marker3=L.marker([12.979412,77.636890]).addTo(myapp);
+         const marker4=L.marker([12.935932,77.628200]).addTo(myapp);
+         const marker5=L.marker([12.961181,77.640594]).addTo(myapp);
+         const marker6=L.marker([12.966021,77.711749]).addTo(myapp);
+          const marker7=L.marker([12.971299,77.747750]).addTo(myapp);
+         const marker8=L.marker([13.113894,77.614272]).addTo(myapp);
+         const marker9=L.marker([12.909072,77.639917]).addTo(myapp);
+         const marker10=L.marker([12.863328,77.583510]).addTo(myapp);
+
+         marker.setLatLng([lat,lon]);
+         marker.bindPopup("<B>Motor iFxM1.</B>").openPopup();
+         const circ2=L.circle([lat, lon], {radius: 300,color: 'red',fillColor:'red',opacity:.75}).addTo(mymap);
+        });
+        } else {
+        console.log('geolocation not available');
+     }
+    </script>
+
+<br/><br/><br/><br/>
+        <div id="section1" style="background-color: rgba(255, 0, 0, 0.2);">
+            <br/><br/>
+                <center> <h1>Temperature</h1></center>
+<div class="container">
+
+<img class="img-fluid img-thumbnail" src="{%static 'img/temperature.png' %}" alt="">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+</button>
+
+</div>
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Motor temperature</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+ <select onchange="Swap(this,'MyImg');" >
+      <option >Select Motor</option>
+      <option >Motor iFxM1</option>
+
+</select>
+<iframe id="MyImg" width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/apps/matlab_visualizations/330157"></iframe>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+            <br>
+        </div>
+
+        <div id="section2" style="background-color: rgba(167, 217, 67,0.2);">
+            <br/>
+                <center> <h1>Voltage</h1></center>
+<!-- voltage -->
+<!-- Button trigger modal -->
+<div class="container">
+
+<img class="img-fluid img-thumbnail" src="{%static 'img/voltage.PNG' %}" alt="">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter1">
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+</button>
+
+</div>
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle1">Motor voltage</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+ <select onchange="Swapv(this,'MyImg1');" >
+      <option >Select Motor</option>
+      <option >Motor iFxM1</option>
+
+</select>
+<iframe id="MyImg1" width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/apps/matlab_visualizations/330126"></iframe>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+        </div>
+<!-- end voltage -->
+
+ <div id="section3" style="background-color: rgba(67, 204, 190,0.2);">
+          <br/><br/>
+                <center> <h1>Current</h1></center>
+<!-- current -->
+<!-- Button trigger modal -->
+<div class="container">
+
+<img class="img-fluid img-thumbnail" src="{%static 'img/Current.png' %}" alt="">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter2">
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+</button>
+
+</div>
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle2">Motor current</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+ <select onchange="Swapc(this,'MyImg2');" >
+      <option >Select Motor</option>
+      <option >Motor iFxM1</option>
+</select>
+<iframe id="MyImg2" width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/apps/matlab_visualizations/328857"></iframe>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+             <br/><br/>
+ </div>
+<!-- end current -->
+
+
+        <div id="section4" style="background-color: rgba(158, 77, 139,0.2);">
+             <br/><br/>
+                <center> <h1>Vibration</h1></center>
+
+<!-- acc -->
+<!-- Button trigger modal -->
+<div class="container">
+
+<img class="img-fluid img-thumbnail" src="{%static 'img/vibration.png' %}" alt="">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter3">
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+</button>
+
+</div>
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle3" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle3">Motor vibrations</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+ <select onchange="Swapa(this,'MyImg3');" >
+      <option >Select Motor</option>
+      <option >Motor iFxM1</option>
+</select>
+<iframe id="MyImg3" width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/apps/plugins/330129"></iframe>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+            <br/><br/>
+        </div>
+<!-- end acc -->
+<br/><br/><br/>
+      <!-- Footer -->
+     {% include './footer.html'%}
+
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+ <i class="fas fa-angle-double-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+{% include './logout.html'%}
+{% include './jscripts.html'%}
+
+</body>
+
+</html>
+

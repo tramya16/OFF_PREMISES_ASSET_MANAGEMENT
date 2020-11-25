@@ -1,0 +1,98 @@
+{% load static %}
+
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title> Admin  Dashboard</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="{%static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+  <!-- Custom styles for this template-->
+  <link href="{%static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+        {% include './dashboard.html' %}
+
+<!--        {% for d in data %}-->
+<!--        <h1>{{d.temperature}}</h1>-->
+<!--        {% endfor %}-->
+   <!-- main content-->
+        <div class="table table-hover" style="padding-right:20px;padding-left:20px;">
+        <table class="table table-striped table table-bordered table table-hover">
+  <thead id="MyTable" class="thead-dark">
+    <tr>
+      <th scope="col">Motor </th>
+      <th scope="col">Prediction</th>
+      <th scope="col">faulty value</th>
+      <th scope="col">cause</th>
+      <th scope="col">solution</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for motor in allmotors %}
+  {% if motor.status == 'Over Heating and Over Current' %}
+  <tr>
+    <th scope="row">{{motor.mid}}</th>
+
+      <td><i class="fas fa-exclamation-triangle"></i>The current working condition of motor might lead to a rapid rise in temperature resulting in Overheating of motor</td>
+       <td>{{motor.Temp}}°C</td>
+      <td> poor power quality, or a high temperature operating environment</td>
+    <td>It is critical that the motor is kept as cool as possible,
+ensuring the operating environment is kept cool if possible will help prevent breakdowns.</td>
+  </tr>
+      {% elif  motor.status == 'Over Current and Over Voltage'  %}
+       <tr>
+    <th scope="row">{{motor.mid}}</th>
+
+      <td><i class="fas fa-exclamation-triangle"></i>The current working condition of motor might cause an excessive current flow within the motor windings resulting in Electrical overload or over-current</td>
+       <td>{{motor.current}}A</td>
+      <td> The current flow exceeds design current which the motor is able to carry efficiently and safely.
+        It can also be a result of short circuited conductors, or an excessive voltage supply.</td>
+    <td> Electrical overload can be prevented by installing effective over-current protection which will detect overcurrent and interrupt supply.</td>
+  </tr>
+   {% endif %}
+  {% endfor %}
+  </tbody>
+</table>
+        </div>
+
+
+
+
+
+    <!--  end of main content-->
+      <!-- Footer -->
+
+
+          {% include './footer.html' %}
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+  </div>
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+{% include './logout.html'%}
+{% include './jscripts.html'%}
+
+</body>
+
+</html>

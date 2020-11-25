@@ -1,0 +1,132 @@
+{% load static %}
+
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title> Admin  Dashboard</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="{%static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+  <!-- Custom styles for this template-->
+  <link href="{%static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+
+<style>
+  .container {
+  position: relative;
+  width: 50%;
+}
+
+/* Make the image responsive */
+.container img {
+  width: 100%;
+  height: auto;
+}
+
+/* Style the button and place it in the middle of the container/image */
+.container .btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #555;
+  color: white;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.container .btn:hover {
+  background-color: black;
+}
+
+</style>
+  <script language="JavaScript" type="text/javascript">
+var Path='https://thingspeak.com/channels/';
+var ImgAry=new Array('','984447/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15','Two.gif','Three.gif','Four.gif','Five.gif');
+
+function Swap(obj,id){
+ var i=obj.selectedIndex;
+ if (i<1){ return; }
+ document.getElementById(id).src=Path+ImgAry[i];
+}
+
+</script>
+
+</head>
+        {% include './dashboard.html' %}
+<!-- Button trigger modal -->
+<div class="container">
+
+<img class="img-fluid" src="{%static 'img/temperature.png' %}" alt="">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+</button>
+
+</div>
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Motor m1 temperature</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+ <select onchange="Swap(this,'MyImg');" >
+      <option >Select Motor</option>
+      <option >Motor1</option>
+      <option >Motor2</option>
+      <option >Motor3</option>
+</select>
+        <iframe id="MyImg"  width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/984447/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+      <!-- Footer -->
+
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+{% include './logout.html'%}
+{% include './jscripts.html'%}
+
+</body>
+
+</html>
+
